@@ -1,11 +1,12 @@
 #include <stdio.h>
+#include <string.h>
 
 const int MAXSIZE = 1000;
-char * stack[MAXSIZE];
-int top = -1;
+char stack[MAXSIZE];
+int top = -1, front = 0;
 
-char * pop() {
-   char data[MAXSIZE];
+char pop() {
+   char data;
 
    if(top != -1) {
       data = stack[top];
@@ -14,12 +15,33 @@ char * pop() {
    }
 }
 
-int push(int data) {
+void push(char data) {
+    if (top == MAXSIZE){
+        printf("exeeded limit");
+        return;
+    }
+    top = top + 1;
+    stack[top] = data;
+}
 
-   if(!isfull()) {
-      top = top + 1;
-      stack[top] = data;
-   } else {
-      printf("Could not insert data, Stack is full.\n");
-   }
+void main(){
+    char original[MAXSIZE], b;
+    scanf(" %[^\t\n]s", original);
+
+    for (int i = 0; i < strlen(original); i++){
+        push(original[i]);
+    }
+    for (int i = 0;i < (strlen(original) / 2);i++){
+      if (stack[top] == stack[front]){
+        pop();
+        front++;
+      }
+      else{
+        printf("\"%s\" is not a palindrome", original);
+        break;
+      }
+    }
+    if ((strlen(original) / 2)  ==  front){
+        printf("\"%s\" is palindrome\n", original);
+    }
 }
