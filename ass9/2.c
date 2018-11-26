@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <string.h>
 
-const int MAXSIZE = 1000;
+#define MAXSIZE  1000
+
 char stack[MAXSIZE];
 int top = -1, front = 0;
 
 char pop() {
    char data;
-
    if(top != -1) {
       data = stack[top];
       top = top - 1;
@@ -26,10 +26,11 @@ void push(char data) {
 
 void main(){
     char original[MAXSIZE], b;
-    scanf(" %[^\t\n]s", original);
-
+    gets(original);
     for (int i = 0; i < strlen(original); i++){
-        push(original[i]);
+        if (original[i] != ' ' && original[i] != '.' && original[i] != ',' && original[i] != ':'){
+            push(original[i]);
+        }
     }
     for (int i = 0;i < (strlen(original) / 2);i++){
       if (stack[top] == stack[front]){
@@ -37,7 +38,7 @@ void main(){
         front++;
       }
       else{
-        printf("\"%s\" is not a palindrome", original);
+        printf("\"%s\" is not a palindrome\n", original);
         break;
       }
     }
